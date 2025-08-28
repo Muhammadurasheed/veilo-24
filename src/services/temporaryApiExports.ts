@@ -5,29 +5,50 @@ export interface ApiResponse<T = any> {
   error?: string;
 }
 
+// Re-export common types from main types file
+export type { DocumentType } from '../types/index';
+
 export const AnalyticsApi = {
-  getPlatformOverview: async () => ({ success: false, error: 'Not implemented' }),
-  getExpertMetrics: async () => ({ success: false, error: 'Not implemented' }),
+  getPlatformOverview: async (): Promise<ApiResponse<any>> => ({ success: false, error: 'Not implemented' }),
+  getExpertMetrics: async (): Promise<ApiResponse<any>> => ({ success: false, error: 'Not implemented' }),
+  getExpertAnalytics: async (expertId: string, timeframe: string): Promise<ApiResponse<any>> => ({ success: false, error: 'Not implemented' }),
+  getExpertRankings: async (sortBy: string, limit: number): Promise<ApiResponse<any[]>> => ({ success: false, error: 'Not implemented' }),
+};
+
+export const AdminApi = {
+  verifyExpert: async (expertId: string, verificationData: any): Promise<ApiResponse<{ success: boolean; }>> => ({ success: false, error: 'Not implemented' }),
+  getFlaggedContent: async (): Promise<ApiResponse<any[]>> => ({ success: false, error: 'Not implemented' }),
+  resolveFlag: async (contentId: string, action: "approve" | "remove"): Promise<ApiResponse<any>> => ({ success: false, error: 'Not implemented' }),
+  getPendingExperts: async (): Promise<ApiResponse<any[]>> => ({ success: false, error: 'Not implemented' }),
+  getAllExperts: async (): Promise<ApiResponse<any[]>> => ({ success: false, error: 'Not implemented' }),
+  getExpertsAdvanced: async (filters?: any): Promise<ApiResponse<any[]>> => ({ success: false, error: 'Not implemented' }),
+  bulkExpertAction: async (expertIds: string[], action: string, data?: any): Promise<ApiResponse<any>> => ({ success: false, error: 'Not implemented' }),
+  getPlatformOverview: async (): Promise<ApiResponse<any>> => ({ success: false, error: 'Not implemented' }),
 };
 
 export const UserApi = {
-  registerExpertAccount: async () => ({ success: false, error: 'Not implemented' }),
-  login: async () => ({ success: false, error: 'Not implemented' }),
-  updateProfile: async () => ({ success: false, error: 'Not implemented' }),
-  updateAvatar: async () => ({ success: false, error: 'Not implemented' }),
-  refreshToken: async () => ({ success: false, error: 'Not implemented' }),
+  registerExpertAccount: async (expertData: any): Promise<ApiResponse<any>> => ({ success: false, error: 'Not implemented' }),
+  login: async (credentials: { email: string; password: string }): Promise<ApiResponse<{ token: string; user: any; refreshToken?: string }>> => ({ success: false, error: 'Not implemented' }),
+  updateProfile: async (profileData: any): Promise<ApiResponse<any>> => ({ success: false, error: 'Not implemented' }),
+  updateAvatar: async (avatarUrl: string): Promise<ApiResponse<any>> => ({ success: false, error: 'Not implemented' }),
+  refreshToken: async (refreshToken: string): Promise<ApiResponse<{ token: string; user: any; refreshToken?: string }>> => ({ success: false, error: 'Not implemented' }),
+  register: async (userData: any): Promise<ApiResponse<{ token: string; user: any }>> => ({ success: false, error: 'Not implemented' }),
+  createAnonymousUser: async (): Promise<ApiResponse<{ token: string; user: any }>> => ({ success: false, error: 'Not implemented' }),
 };
 
 export const SanctuaryApi = {
-  createSession: async () => ({ success: false, error: 'Not implemented' }),
-  getSession: async () => ({ success: false, error: 'Not implemented' }),
-  submitMessage: async () => ({ success: false, error: 'Not implemented' }),
-  getSubmissions: async () => ({ success: false, error: 'Not implemented' }),
+  createSession: async (sessionData: ApiSanctuaryCreateRequest): Promise<ApiResponse<{ id: string; topic: string; description: string; emoji: string; expiresAt: string; hostToken?: string; }>> => ({ success: false, error: 'Not implemented' }),
+  getSession: async (sessionId: string): Promise<ApiResponse<any>> => ({ success: false, error: 'Not implemented' }),
+  submitMessage: async (sessionId: string, message: string): Promise<ApiResponse<any>> => ({ success: false, error: 'Not implemented' }),
+  getSubmissions: async (sessionId: string): Promise<ApiResponse<any[]>> => ({ success: false, error: 'Not implemented' }),
+  joinSession: async (sessionId: string, alias: string): Promise<ApiResponse<any>> => ({ success: false, error: 'Not implemented' }),
+  leaveSession: async (sessionId: string): Promise<ApiResponse<any>> => ({ success: false, error: 'Not implemented' }),
+  flagSession: async (sessionId: string, reason: string): Promise<ApiResponse<any>> => ({ success: false, error: 'Not implemented' }),
 };
 
 export const LiveSanctuaryApi = {
-  createLiveSession: async () => ({ success: false, error: 'Not implemented' }),
-  joinSession: async () => ({ success: false, error: 'Not implemented' }),
+  createLiveSession: async (sessionData: any): Promise<ApiResponse<any>> => ({ success: false, error: 'Not implemented' }),
+  joinSession: async (sessionId: string, userData: any): Promise<ApiResponse<any>> => ({ success: false, error: 'Not implemented' }),
 };
 
 export const GeminiApi = {

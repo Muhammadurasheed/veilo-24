@@ -9,7 +9,7 @@ import { useToast } from '@/hooks/use-toast';
 import Layout from '@/components/layout/Layout';
 import AdminLogin from '@/components/admin/AdminLogin';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
-import FlagshipExpertManagement from '@/components/admin/FlagshipExpertManagement';
+import FlagshipExpertManagementStub from '@/components/admin/FlagshipExpertManagementStub';
 import ContentModeration from '@/components/admin/ContentModeration';
 import EnhancedAdminDashboard from '@/components/admin/EnhancedAdminDashboard';
 import UserSafetyMonitor from '@/components/admin/UserSafetyMonitor';
@@ -101,7 +101,7 @@ const AdminPanel = () => {
 
         <Routes>
           <Route path="/" element={<EnhancedAdminDashboard />} />
-          <Route path="/experts" element={<FlagshipExpertManagement />} />
+          <Route path="/experts" element={<FlagshipExpertManagementStub />} />
           <Route path="/content" element={<ContentModeration />} />
           <Route path="/safety" element={<UserSafetyMonitor />} />
           <Route path="/monitoring" element={<RealTimePlatformMonitor />} />

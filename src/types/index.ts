@@ -129,7 +129,7 @@ export interface Expert {
   };
   verificationDocuments?: Array<{
     id: string;
-  type: 'id' | 'credential' | 'certificate' | 'other' | 'photo' | 'resume' | 'cv';
+    type: DocumentType;
     fileName: string;
     fileUrl: string;
     uploadedAt: string;
@@ -263,6 +263,7 @@ export interface SanctuarySession {
   isActive: boolean;
   allowAnonymous?: boolean;
   hostId?: string;
+  mode?: 'text' | 'audio' | 'video';
 }
 
 export interface SanctuaryParticipant {
