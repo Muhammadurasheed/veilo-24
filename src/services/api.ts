@@ -419,6 +419,19 @@ export const AdminApi = {
     return apiRequest('POST', `/api/admin/content/${contentId}/resolve`, { action });
   },
 
+  // Missing API methods - adding implementations
+  async getExpertsAdvanced(params?: any) {
+    return apiRequest('GET', '/api/admin/experts/advanced', null, { params });
+  },
+
+  async bulkExpertAction(action: string, expertIds: string[]) {
+    return apiRequest('POST', '/api/admin/experts/bulk', { action, expertIds });
+  },
+
+  async login(credentials: { email: string; password: string }) {
+    return apiRequest('POST', '/api/auth/admin/login', credentials);
+  },
+
   // Content moderation queue
   async getModerationQueue(params: { priority?: string; type?: string } = {}) {
     return apiRequest('GET', '/api/admin/moderation/queue', null, { params });
@@ -445,8 +458,7 @@ export const AdminApi = {
   },
 
   // Additional admin methods for complete coverage
-  getAllExperts: async () => apiRequest('GET', '/api/admin/experts/all')
-} as const;
+};
 
 // Post API methods
 export const PostApi = {

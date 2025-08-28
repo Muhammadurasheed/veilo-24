@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { useUserContext, UserCreationStateInterface } from '@/contexts/UserContext';
+import { useUserContext } from '@/contexts/UserContextSimple';
 import { CheckCircle, AlertCircle, Loader2, Sparkles, Shield, Users } from 'lucide-react';
 
 interface AccountCreationFlowProps {
@@ -29,7 +29,7 @@ export const AccountCreationFlow = ({
     }
   }, [creationState.step, onComplete]);
 
-  const getStepIcon = (step: UserCreationStateInterface['step']) => {
+  const getStepIcon = (step: string) => {
     switch (step) {
       case 'initializing':
       case 'creating':
@@ -45,7 +45,7 @@ export const AccountCreationFlow = ({
     }
   };
 
-  const getStepColor = (step: UserCreationStateInterface['step']) => {
+  const getStepColor = (step: string) => {
     switch (step) {
       case 'complete':
         return 'text-veilo-green';

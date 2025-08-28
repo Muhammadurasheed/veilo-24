@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { ErrorBoundary } from '@/components/ui/error-boundary';
 import { AuthProvider } from '@/contexts/optimized/AuthContextNew';
-import { UserProvider } from '@/contexts/UserContext';
+import { UserProvider } from '@/contexts/UserContextSimple';
 import { VeiloDataProvider } from '@/contexts/VeiloDataContext';
 import { UnifiedStateProvider } from '@/contexts/UnifiedStateContext';
 import { ThemeProvider } from '@/contexts/ThemeContext';

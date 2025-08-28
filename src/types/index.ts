@@ -129,7 +129,7 @@ export interface Expert {
   };
   verificationDocuments?: Array<{
     id: string;
-    type: 'id' | 'credential' | 'certificate' | 'other' | 'photo' | 'resume' | 'cv';
+  type: 'id' | 'credential' | 'certificate' | 'other' | 'photo' | 'resume' | 'cv';
     fileName: string;
     fileUrl: string;
     uploadedAt: string;
@@ -236,14 +236,7 @@ export interface Testimonial {
   };
 }
 
-export interface VerificationDocument {
-  id: string;
-  type: "id" | "credential" | "certificate" | "other" | "photo" | "resume" | "cv";
-  fileUrl: string;
-  fileName: string;
-  uploadedAt: string;
-  status: "pending" | "approved" | "rejected";
-}
+export type DocumentType = "id" | "credential" | "certificate" | "other" | "photo" | "resume" | "cv";
 
 // Session-related types
 export interface Session {
