@@ -315,7 +315,6 @@ export const ExpertApi = {
   }
 };
 
-// Admin API methods
 export const AdminApi = {
   async login(credentials: { email: string; password: string }) {
     console.log('🔐 AdminApi.login called with:', { email: credentials.email, hasPassword: !!credentials.password });
@@ -409,6 +408,15 @@ export const AdminApi = {
 
   async getAnalytics(params?: any) {
     return apiRequest('GET', '/api/admin/analytics', null, { params });
+  },
+
+  // Content moderation
+  async getFlaggedContent(params?: any) {
+    return apiRequest('GET', '/api/admin/content/flagged', null, { params });
+  },
+
+  async resolveFlag(contentId: string, action: 'approve' | 'remove') {
+    return apiRequest('POST', `/api/admin/content/${contentId}/resolve`, { action });
   },
 
   // Content moderation queue
