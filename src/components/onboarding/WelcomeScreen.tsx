@@ -6,7 +6,13 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Sparkles, Shield, Heart, Users, ArrowRight, Loader2 } from 'lucide-react';
-import { useUserContext, UserCreationStateInterface } from '@/contexts/UserContext';
+import { useUserContext } from '@/contexts/UserContextSimple';
+
+interface UserCreationStateInterface {
+  step: string;
+  progress: number;
+  message: string;
+}
 import { toast } from '@/hooks/use-toast';
 
 interface WelcomeScreenProps {
