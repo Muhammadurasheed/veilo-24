@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
 const dotenv = require('dotenv');
+const session = require('express-session');
 const { initializeSocket } = require('./socket/socketHandler'); // Import socket initialization
 const { createServer } = require('http'); // Import http server
 const { instrument } = require('@socket.io/admin-ui');
