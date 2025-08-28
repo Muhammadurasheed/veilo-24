@@ -9,6 +9,7 @@ const refreshTokenMiddleware = require('../middleware/refreshToken');
 const { uploadAvatar } = require('../config/cloudinary');
 const { authMiddleware } = require('../middleware/auth');
 const { generateAlias } = require('../utils/helpers');
+const passport = require('../config/passport');
 
 const router = express.Router();
 
@@ -431,6 +432,51 @@ router.post('/avatar',
     } catch (error) {
       console.error('Avatar update error:', error);
       return res.error('Avatar update failed', 500);
+    }
+  }
+);
+
+// Google OAuth routes
+router.get('/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+router.get('/google/callback',
+  passport.authenticate('google', { failureRedirect: '/landing?error=oauth_failed' }),
+  async (req, res) => {
+    try {
+      const user = req.user;
+      
+      // Generate JWT tokens for the authenticated user
+      const accessToken = jwt.sign(
+        { 
+          user: {
+            id: user.id,
+            role: user.role
+          }
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+      );
+
+      const refreshToken = jwt.sign(
+        { user: { id: user.id } },
+        process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET,
+        { expiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '30d' }
+      );
+
+      // Save refresh token
+      user.refreshToken = refreshToken;
+      user.lastLoginAt = new Date();
+      await user.save();
+
+      // Redirect to frontend with tokens
+      const redirectUrl = `/?token=${accessToken}&refresh=${refreshToken}`;
+      res.redirect(redirectUrl);
+
+    } catch (error) {
+      console.error('Google OAuth callback error:', error);
+      res.redirect('/landing?error=oauth_error');
     }
   }
 );

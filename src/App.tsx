@@ -3,13 +3,14 @@ import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { AppStateProvider } from '@/contexts/AppStateContext';
-import { UserProvider } from '@/contexts/UserContext';
+import { AuthProvider } from '@/contexts/optimized/AuthContextRefactored';
 import { VeiloDataProvider } from '@/contexts/VeiloDataContext';
 import { SmartRouter } from '@/components/routing/SmartRouter';
 import { Toaster } from '@/components/ui/toaster';
 import { ErrorBoundary } from '@/components/ui/error-boundary';
 
 import Index from '@/pages/Index';
+import LandingPage from '@/pages/LandingPage';
 import Feed from '@/pages/Feed';
 import BeaconsList from '@/pages/BeaconsList';
 import ExpertProfile from '@/pages/ExpertProfile';
@@ -59,13 +60,14 @@ const App: React.FC = () => {
     <ErrorBoundary>
       <ThemeProvider>
         <AppStateProvider>
-          <UserProvider>
+          <AuthProvider>
             <ErrorBoundary fallback={UserErrorFallback}>
               <VeiloDataProvider>
                 <ErrorBoundary fallback={DataErrorFallback}>
                   <SessionProvider>
                     <SmartRouter>
                       <Routes>
+                        <Route path="/landing" element={<LandingPage />} />
                         <Route path="/" element={<Index />} />
                         <Route path="/feed" element={<Feed />} />
                         <Route path="/beacons" element={<BeaconsList />} />
@@ -100,7 +102,7 @@ const App: React.FC = () => {
                 </ErrorBoundary>
               </VeiloDataProvider>
             </ErrorBoundary>
-          </UserProvider>
+          </AuthProvider>
         </AppStateProvider>
       </ThemeProvider>
     </ErrorBoundary>

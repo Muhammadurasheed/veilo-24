@@ -18,7 +18,10 @@ const userSchema = new mongoose.Schema({
   },
   passwordHash: {
     type: String,
-    required: true
+    required: function() {
+      // Password is required only if no OAuth provider is used
+      return !this.googleId;
+    }
   },
   realName: {
     type: String,
@@ -72,6 +75,12 @@ const userSchema = new mongoose.Schema({
   // Token management
   refreshToken: {
     type: String
+  },
+  
+  // OAuth fields
+  googleId: {
+    type: String,
+    sparse: true
   },
   
   // Expert fields
