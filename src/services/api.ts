@@ -419,19 +419,6 @@ export const AdminApi = {
     return apiRequest('POST', `/api/admin/content/${contentId}/resolve`, { action });
   },
 
-  // Missing API methods - adding implementations
-  async getExpertsAdvanced(params?: any) {
-    return apiRequest('GET', '/api/admin/experts/advanced', null, { params });
-  },
-
-  async bulkExpertAction(action: string, expertIds: string[]) {
-    return apiRequest('POST', '/api/admin/experts/bulk', { action, expertIds });
-  },
-
-  async login(credentials: { email: string; password: string }) {
-    return apiRequest('POST', '/api/auth/admin/login', credentials);
-  },
-
   // Content moderation queue
   async getModerationQueue(params: { priority?: string; type?: string } = {}) {
     return apiRequest('GET', '/api/admin/moderation/queue', null, { params });
@@ -701,6 +688,8 @@ export const AppealApi = {
 
 // Export apiRequest for components that need it
 export { apiRequest };
+
+// Export ApiResponse type directly without conflict
 
 // Fixed re-export to avoid conflicts
 export * from './temporaryApiExports';

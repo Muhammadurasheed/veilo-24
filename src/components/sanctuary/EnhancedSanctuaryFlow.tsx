@@ -17,7 +17,8 @@ import {
   MessageCircle,
   Link as LinkIcon
 } from 'lucide-react';
-import { SanctuaryApi, LiveSanctuaryApi } from '@/services/api';
+import { SanctuaryApi } from '@/services/api';
+import { LiveSanctuaryApi } from '@/services/temporaryApiExports';
 
 interface EnhancedSanctuaryFlowProps {
   sessionId: string;

@@ -15,7 +15,7 @@ import {
   Clock,
   AlertTriangle
 } from 'lucide-react';
-import { LiveSanctuaryApi } from '@/services/api';
+import { LiveSanctuaryApi } from '@/services/temporaryApiExports';
 
 interface LiveSanctuaryFormData {
   topic: string;
@@ -62,7 +62,7 @@ const LiveSanctuaryCreator: React.FC = () => {
     try {
       console.log('🎙️ Creating live sanctuary session:', data);
       
-      const response = await LiveSanctuaryApi.createSession({
+      const response = await LiveSanctuaryApi.createLiveSession({
         topic: data.topic,
         description: data.description,
         emoji: data.emoji,

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { SanctuaryApi, LiveSanctuaryApi } from '@/services/api';
+import { SanctuaryApi } from '@/services/api';
+import { LiveSanctuaryApi } from '@/services/temporaryApiExports';
 import { useToast } from '@/hooks/use-toast';
 
 /**
@@ -30,7 +31,7 @@ const SmartSanctuaryRouter: React.FC = () => {
           if (sanctuaryResponse.success && sanctuaryResponse.data) {
             sessionData = sanctuaryResponse.data;
             // Determine type based on mode
-            sessionType = sanctuaryResponse.data.mode === 'live-audio' ? 'live' : 'inbox';
+            sessionType = sanctuaryResponse.data.mode === 'audio' ? 'live' : 'inbox';
           }
         } catch (error) {
           // If not found in sanctuary API, try live sanctuary API

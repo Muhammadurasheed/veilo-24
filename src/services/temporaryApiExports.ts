@@ -48,6 +48,8 @@ export const SanctuaryApi = {
 
 export const LiveSanctuaryApi = {
   createLiveSession: async (sessionData: any): Promise<ApiResponse<any>> => ({ success: false, error: 'Not implemented' }),
+  createSession: async (sessionData: any): Promise<ApiResponse<any>> => ({ success: false, error: 'Not implemented' }),
+  getSession: async (sessionId: string): Promise<ApiResponse<any>> => ({ success: false, error: 'Not implemented' }),
   joinSession: async (sessionId: string, userData: any): Promise<ApiResponse<any>> => ({ success: false, error: 'Not implemented' }),
 };
 
