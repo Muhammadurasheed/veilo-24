@@ -99,7 +99,6 @@ router.post('/admin/login',
   }
 );
 
-// Register new user (now mandatory with real identity + shadow identity)
 router.post('/register', 
   authLimiter,
   validate([
@@ -158,15 +157,7 @@ router.post('/register',
       user.refreshToken = refreshToken;
       await user.save();
 
-      console.log('User registration successful:', {
-        id: user.id,
-        shadowId: user.shadowId,
-        alias: user.alias,
-        email: user.email,
-        role: user.role
-      });
-
-      return res.success({
+      return res.success('Registration successful', {
         token: accessToken,
         refreshToken,
         user: {
@@ -180,15 +171,13 @@ router.post('/register',
           email: user.email,
           realName: user.realName,
           activities: user.activities,
-          preferences: user.preferences
+          preferences: user.preferences,
+          isAnonymous: false
         }
-      }, `Welcome to Veilo, ${user.alias}! Your secure shadow identity has been created.`);
+      });
 
     } catch (error) {
-      console.error('Registration error:', error.message, {
-        stack: error.stack,
-        userId: req.body?.email || 'unknown'
-      });
+      console.error('Registration error:', error.message);
       return res.error('Registration failed: ' + error.message, 500);
     }
   }
@@ -239,7 +228,7 @@ router.post('/login',
       user.lastLoginAt = new Date();
       await user.save();
 
-      return res.success({
+      return res.success('Login successful', {
         token: accessToken,
         refreshToken,
         user: {
@@ -253,9 +242,10 @@ router.post('/login',
           email: user.email,
           realName: user.realName,
           activities: user.activities,
-          preferences: user.preferences
+          preferences: user.preferences,
+          isAnonymous: false
         }
-      }, 'Login successful');
+      });
 
     } catch (error) {
       console.error('Login error:', error);

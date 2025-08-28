@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Heart, Shield, Users, MessageCircle, Video, BookOpen, ArrowRight, Sparkles, Star, CheckCircle } from 'lucide-react';
-import { useAuth } from '@/contexts/optimized/AuthContextRefactored';
+import { useAuth } from '@/contexts/optimized/AuthContextNew';
 import { Link, Navigate } from 'react-router-dom';
 
 const Index = () => {

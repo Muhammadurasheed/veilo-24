@@ -1,112 +1,98 @@
-
-import React, { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import { ThemeProvider } from '@/contexts/ThemeContext';
-import { AppStateProvider } from '@/contexts/AppStateContext';
-import { AuthProvider } from '@/contexts/optimized/AuthContextRefactored';
-import { VeiloDataProvider } from '@/contexts/VeiloDataContext';
-import { SmartRouter } from '@/components/routing/SmartRouter';
-import { Toaster } from '@/components/ui/toaster';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { ErrorBoundary } from '@/components/ui/error-boundary';
+import { AuthProvider } from '@/contexts/optimized/AuthContextNew';
+import { UserProvider } from '@/contexts/UserContext';
+import { VeiloDataProvider } from '@/contexts/VeiloDataContext';
+import { UnifiedStateProvider } from '@/contexts/UnifiedStateContext';
+import { ThemeProvider } from '@/contexts/ThemeContext';
+import { Toaster } from '@/components/ui/toaster';
+import { Toaster as SonnerToaster } from '@/components/ui/sonner';
+import { PWAProvider } from '@/contexts/PWAContext';
+import { PerformanceProvider } from '@/contexts/PerformanceContext';
+import { SmartInsightsProvider } from '@/contexts/SmartInsightsContext';
 
+// Components
 import Index from '@/pages/Index';
-import LandingPage from '@/pages/LandingPage';
-import Feed from '@/pages/Feed';
-import BeaconsList from '@/pages/BeaconsList';
-import ExpertProfile from '@/pages/ExpertProfile';
+import LandingPageNew from '@/pages/LandingPageNew';
 import ExpertRegistration from '@/pages/ExpertRegistration';
-import ExpertDashboard from '@/pages/ExpertDashboard';
+import BeaconsList from '@/pages/BeaconsList';
+import BookSession from '@/pages/BookSession';
+import ExpertProfile from '@/pages/ExpertProfile';
 import Chat from '@/pages/Chat';
+import SanctuaryInbox from '@/pages/SanctuaryInbox';
+import MySanctuaries from '@/pages/MySanctuaries';
+import Sanctuary from '@/pages/Sanctuary';
+import EnhancedSanctuary from '@/pages/EnhancedSanctuary';
+import EnhancedLiveSanctuary from '@/pages/EnhancedLiveSanctuary';
+import Feed from '@/pages/Feed';
 import Profile from '@/pages/Profile';
 import Settings from '@/pages/Settings';
 import SessionHub from '@/pages/SessionHub';
-import NotFound from '@/pages/NotFound';
+import ExpertDashboard from '@/pages/ExpertDashboard';
 import AdminPanel from '@/pages/AdminPanel';
-import BookSession from '@/pages/BookSession';
-import Sanctuary from '@/pages/Sanctuary';
-import SanctuaryRecover from '@/pages/SanctuaryRecover';
-import SanctuaryInbox from '@/components/sanctuary/SanctuaryInbox';
-import { SanctuaryHostDashboard } from '@/components/sanctuary/SanctuaryHostDashboard';
-import MySanctuariesPage from '@/pages/MySanctuaries';
 import SanctuarySubmit from '@/pages/SanctuarySubmit';
-import EnhancedSanctuary from '@/pages/EnhancedSanctuary';
-import EnhancedLiveSanctuary from '@/pages/EnhancedLiveSanctuary';
+import SanctuaryRecover from '@/pages/SanctuaryRecover';
 import Phase4Test from '@/pages/Phase4Test';
 import FollowedExperts from '@/pages/FollowedExperts';
-import { SessionProvider } from '@/contexts/SessionContext';
-
+import NotFound from '@/pages/NotFound';
 import './App.css';
 
-const UserErrorFallback = ({ error }: { error: Error }) => (
-  <div className="min-h-screen flex items-center justify-center">
-    <p>Unable to load user data. Please refresh the page.</p>
-  </div>
-);
-
-const DataErrorFallback = ({ error }: { error: Error }) => (
-  <div className="min-h-screen flex items-center justify-center">
-    <p>Unable to load application data. Please refresh the page.</p>
-  </div>
-);
-
-const App: React.FC = () => {
-  // Initialize i18n and other global services
-  useEffect(() => {
-    // Set up any additional initialization here
-    document.title = 'Veilo - Anonymous Support & Guidance';
-  }, []);
-
+export default function App() {
   return (
-    <ErrorBoundary>
-      <ThemeProvider>
-        <AppStateProvider>
-          <AuthProvider>
-            <ErrorBoundary fallback={UserErrorFallback}>
-              <VeiloDataProvider>
-                <ErrorBoundary fallback={DataErrorFallback}>
-                  <SessionProvider>
-                    <SmartRouter>
-                      <Routes>
-                        <Route path="/landing" element={<LandingPage />} />
-                        <Route path="/" element={<Index />} />
-                        <Route path="/feed" element={<Feed />} />
-                        <Route path="/beacons" element={<BeaconsList />} />
-                        <Route path="/beacons/:expertId" element={<ExpertProfile />} />
-                        <Route path="/followed-experts" element={<FollowedExperts />} />
-                        <Route path="/expert/:expertId" element={<ExpertProfile />} />
-                        <Route path="/sessions/book/:expertId" element={<BookSession />} />
-                        <Route path="/call/:expertId/:type" element={<Chat />} />
-                        <Route path="/chat/:sessionId?" element={<Chat />} />
-                        <Route path="/sessions" element={<SessionHub />} />
-                        <Route path="/profile" element={<Profile />} />
-                        <Route path="/settings" element={<Settings />} />
-                        <Route path="/register-expert" element={<ExpertRegistration />} />
-                        <Route path="/expert-dashboard" element={<ExpertDashboard />} />
-                        <Route path="/admin/*" element={<AdminPanel />} />
-                        <Route path="/sanctuary" element={<Sanctuary />} />
-                        <Route path="/sanctuary/recover" element={<SanctuaryRecover />} />
-                        <Route path="/sanctuary-inbox/:id" element={<SanctuaryInbox />} />
-                        <Route path="/sanctuary-host/:id" element={<SanctuaryHostDashboard />} />
-        <Route path="/sanctuary/submit/:sessionId" element={<SanctuarySubmit />} />
-        <Route path="/sanctuary/inbox/:sessionId" element={<SanctuaryInbox />} />
-        <Route path="/sanctuary/recover/:sessionId" element={<SanctuaryRecover />} />
-        <Route path="/sanctuary/live/:sessionId" element={<EnhancedLiveSanctuary />} />
-        <Route path="/my-sanctuaries" element={<MySanctuariesPage />} />
-                        <Route path="/sanctuary/:sessionId" element={<EnhancedSanctuary />} />
-                        <Route path="/phase4-test" element={<Phase4Test />} />
-                        <Route path="*" element={<NotFound />} />
-                      </Routes>
-                    </SmartRouter>
-                    <Toaster />
-                  </SessionProvider>
-                </ErrorBoundary>
-              </VeiloDataProvider>
-            </ErrorBoundary>
-          </AuthProvider>
-        </AppStateProvider>
-      </ThemeProvider>
-    </ErrorBoundary>
+    <ThemeProvider>
+      <ErrorBoundary>
+        <PWAProvider>
+          <PerformanceProvider>
+            <SmartInsightsProvider>
+              <AuthProvider>
+                <UserProvider>
+                  <ErrorBoundary>
+                    <VeiloDataProvider>
+                      <ErrorBoundary>
+                        <UnifiedStateProvider>
+                          <Routes>
+                            {/* Public Routes */}
+                            <Route path="/landing" element={<LandingPageNew />} />
+                            
+                            {/* Protected Routes */}
+                            <Route path="/" element={<Index />} />
+                            <Route path="/expert-registration" element={<ExpertRegistration />} />
+                            <Route path="/beacons" element={<BeaconsList />} />
+                            <Route path="/book-session" element={<BookSession />} />
+                            <Route path="/expert/:id" element={<ExpertProfile />} />
+                            <Route path="/chat" element={<Chat />} />
+                            <Route path="/sanctuary-inbox" element={<SanctuaryInbox />} />
+                            <Route path="/my-sanctuaries" element={<MySanctuaries />} />
+                            <Route path="/sanctuary" element={<Sanctuary />} />
+                            <Route path="/sanctuary/:id" element={<EnhancedSanctuary />} />
+                            <Route path="/live-sanctuary/:id" element={<EnhancedLiveSanctuary />} />
+                            <Route path="/feed" element={<Feed />} />
+                            <Route path="/profile" element={<Profile />} />
+                            <Route path="/settings" element={<Settings />} />
+                            <Route path="/sessions" element={<SessionHub />} />
+                            <Route path="/dashboard" element={<ExpertDashboard />} />
+                            <Route path="/admin" element={<AdminPanel />} />
+                            <Route path="/sanctuary-submit" element={<SanctuarySubmit />} />
+                            <Route path="/sanctuary-recover" element={<SanctuaryRecover />} />
+                            <Route path="/phase4-test" element={<Phase4Test />} />
+                            <Route path="/following" element={<FollowedExperts />} />
+                            
+                            {/* Fallback */}
+                            <Route path="*" element={<NotFound />} />
+                          </Routes>
+                        </UnifiedStateProvider>
+                      </ErrorBoundary>
+                    </VeiloDataProvider>
+                  </ErrorBoundary>
+                </UserProvider>
+              </AuthProvider>
+            </SmartInsightsProvider>
+          </PerformanceProvider>
+        </PWAProvider>
+      </ErrorBoundary>
+      
+      <Toaster />
+      <SonnerToaster />
+    </ThemeProvider>
   );
 }
-
-export default App;
